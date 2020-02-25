@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MY_Model extends CI_Controller 
+class MY_Model extends CI_Model 
 {
    protected $table = '';
    protected $perPage = 5;
@@ -20,10 +20,10 @@ class MY_Model extends CI_Controller
    // fungsi validasi input
    // rules: dideklarasikan dalam masing-masing model
 
-   public function validation()
+   public function validate()
    {
       $this->load->library('form_validation');
-      $this->form_validation->set_error_delimeters(
+      $this->form_validation->set_error_delimiters(
          '<small class="form-text text-danger">','</small>'
       );
       $validationRules = $this->getValidationRules();
@@ -99,57 +99,63 @@ class MY_Model extends CI_Controller
       return $this->db->affected_rows();
    }
 
-   public function pagination($page)
+   public function paginate($page)
    {
       $this->db->limit(
-         $this->$perPage,
+         $this->perPage,
          $this->calculateRealOffset($page)
       );
+
+      return $this;
    }
 
    public function calculateRealOffset($page)
    {
       if (is_null($page) || empty($page)) {
          $offset = 0;
-      }else {
-         $offset = ($page*$this->$perPage) - $this->$perPage;
+      } else {
+         $offset = ($page * $this->perPage) - $this->perPage;
+         
       }
 
       return $offset;
    }
+
+   
 
    public function makePagination($baseUrl, $uriSegment, $totalRows = null) 
    {
       $this->load->library('pagination');
 
       $config = [
-         'base_url'           =>$baseUrl,
-         'uri_segment'        =>$uriSegment,
-         'per_page'           =>$this->perPage,
-         'total_rows'         =>$totalRows,
-         'use_page_numbers'   =>true,
-
-         'full_tag_open'      =>'<ul class="pagination">',
-         'full_tag_close'     =>'</ul>',
-         'attributes'         =>['class' => 'page-link'],
-         'first_link'         =>false,
-         'last_link'          =>false,
-         'first_tag_open'     =>'<li class="page-item">',
-         'first_tag_close'    =>'</li>',
-         'prev_link'          =>'&laquo',
-         'prev_tag_open'      =>'<li class="page-item">',
-         'prev_tag_close'     =>'</li>',
-         'next_link'          =>'&raquo',
-         'next_tag_open'      =>'<li class="page-item">',
-         'next_tag_close'     =>'</li>',
-         'last_tag_open'      =>'<li class="page-item">',
-         'last_tag_close'     =>'</li>',
-         'cur_tag_open'       =>'<li class="page-item" active><a href="#" class="page-link">',
-         'cur_tag_close'      =>'<span class="sr-only>(current)</span></a></li>',
-         'num_tag_open'       =>'<li class="page-item">',
-         'num_tag_close'      =>'</li>'
-      ];
+			'base_url'			=> $baseUrl,
+			'uri_segment'		=> $uriSegment,
+			'per_page'			=> $this->perPage,
+			'total_rows'		=> $totalRows,
+			'use_page_numbers'	=> true,
+			
+			'full_tag_open'		=> '<ul class="pagination">',
+			'full_tag_close'	=> '</ul>',
+			'attributes'		=> ['class' => 'page-link'],
+			'first_link'		=> false,
+			'last_link'			=> false,
+			'first_tag_open'	=> '<li class="page-item">',
+			'first_tag_close'	=> '</li>',
+			'prev_link'			=> '&laquo',
+			'prev_tag_open'		=> '<li class="page-item">',
+			'prev_tag_close'	=> '</li>',
+			'next_link'			=> '&raquo',
+			'next_tag_open'		=> '<li class="page-item">',
+			'next_tag_close'	=> '</li>',
+			'last_tag_open'		=> '<li class="page-item">',
+			'last_tag_close'	=> '</li>',
+			'cur_tag_open'		=> '<li class="page-item active"><a href="#" class="page-link">',
+			'cur_tag_close'		=> '<span class="sr-only">(current)</span></a></li>',
+			'num_tag_open'		=> '<li class="page-item">',
+			'num_tag_close'		=> '</li>',
+		];
       $this->pagination->initialize($config);
-      return $this->pagination->crete_link();
+      return $this->pagination->create_links();
+
    }
 }
