@@ -1,7 +1,7 @@
 
-<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top bg-l mb-2">
+<nav class="navbar navbar-expand-md mb-5 bg-light navbar-light fixed-top bg-l mb-2">
       <div class="container">
-        <a class="navbar-brand" href="#">Ci Shop</a>
+        <a class="navbar-brand" href="<?= base_url()?>">Ci Shop</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#"
+              <a class="nav-link" href= "<?= base_url()?>"
                 >Home <span class="sr-only">(current)</span></a
               >
             </li>
@@ -31,12 +31,10 @@
                 >manage</a
               >
               <div class="dropdown-menu" aria-labelledby="dropdown-1">
-                <a href="/admin-category.html" class="dropdown-item"
-                  >kategori</a
-                >
-                <a href="/admin-produk.html" class="dropdown-item">Produk</a>
+                <a href="<?=base_url('category')?>" class="dropdown-item">kategori</a>
+                <a href="<?=base_url('product')?>" class="dropdown-item">Produk</a>
                 <a href="/admin-order.html" class="dropdown-item">Order</a>
-                <a href="/admin-users.html" class="dropdown-item">Pengguna</a>
+                <a href="<?=base_url('user')?>" class="dropdown-item">Pengguna</a>
               </div>
             </li>
           </ul>

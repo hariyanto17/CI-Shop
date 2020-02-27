@@ -55,12 +55,12 @@ class MY_Model extends CI_Model
       return $this;
    }
 
-   public function join($table, $type='left')
+   public function join($table, $type = 'left')
    {
-      $this->db->join($table, "$this->$table.id_$tabel = $tabel.id", $type);
+      $this->db->join($table, "$this->table.id_$table = $table.id", $type);
       return $this;
    }
-
+   
    public function orderBy($column, $order='asc')
    {
       $this->db->order_by($column, $order);

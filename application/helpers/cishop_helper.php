@@ -19,10 +19,12 @@
 
    function getCategories()
    {
-      $CI      = & get_instance();
-      $query   = $ci->db->get('category')->result();
+      $CI      =& get_instance();
+      $query   = $CI->db->get('category')->result();
       return $query;
    }
+
+   
 
    function getCart()
    {
